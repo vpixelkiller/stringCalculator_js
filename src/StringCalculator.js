@@ -11,7 +11,9 @@ class StringCalculator{
 
     this.splitTestStringIntoAnArrayOfNumbers(testString)
     
-    if (this.thereAreNumbersToSum()) return this.sumsString(this.testStringArray)
+    if (!this.thereAreNumbersToSum()) return 'There is not numbers to sum'
+    
+    return this.sumsString(this.testStringArray)
   }
   
   // Private
