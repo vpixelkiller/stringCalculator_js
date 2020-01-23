@@ -1,3 +1,6 @@
+const NEGATIVE_NUMBERS = /-[0-9]\d*/g
+const COMA_AND_LINE_RETURNS = /\n|,/
+
 class StringCalculator{
   constructor(){
     this.NULL_VALUE = 0
@@ -5,6 +8,7 @@ class StringCalculator{
     this.testStringArray = []
     this.negativeNumbers = []
   }
+  
   add(testString){
     if (this.inputTextIsEmpty(testString)) return this.NULL_VALUE
     if (this.thereAreNegativeNumbers(testString)) return "Negatives not allowed: " + this.negativeNumbers
@@ -25,20 +29,26 @@ class StringCalculator{
   }
   
   thereAreNegativeNumbers(testString) {
-    this.negativeNumbers  = testString.match(/-[0-9]\d*/g)
+    this.negativeNumbers  = testString.match(NEGATIVE_NUMBERS)
     return this.negativeNumbers
   }
   
   splitTestStringIntoAnArrayOfNumbers(testCases){
     let expectedDigitsArray = []
-    const splitArray = testCases.split(/\n|,/)
+    const splitArray = testCases.split(COMA_AND_LINE_RETURNS)
+
     splitArray.forEach(element => {
-      if (!isNaN(Number(element)) && Number(element) <= 1000) expectedDigitsArray.push(element)
+      if (this.notNumberOrBiggerOneThousand(element)) expectedDigitsArray.push(element)
     })
+    
     this.testStringArray = expectedDigitsArray
     return expectedDigitsArray
   }
   
+  notNumberOrBiggerOneThousand(element) {
+    return !isNaN(Number(element)) && Number(element) <= 1000
+  }
+
   thereAreNumbersToSum() {
     return this.testStringArray.length >= this.ENTER_THE_SUM_NULL_VALUE
   }
